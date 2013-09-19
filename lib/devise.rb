@@ -4,6 +4,7 @@ require 'active_support/dependencies'
 require 'orm_adapter'
 require 'set'
 require 'securerandom'
+require 'omniauth'
 
 module Devise
   autoload :Delegator,          'devise/delegator'

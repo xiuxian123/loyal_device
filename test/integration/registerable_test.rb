@@ -58,7 +58,7 @@ class RegistrationTest < ActionDispatch::IntegrationTest
 
     user = User.order(:id).last
     assert_equal user.email, 'new_user@test.com'
-    assert_not user.confirmed?
+    assert_not user.email_confirmed?
   end
 
   test 'a guest user should receive the confirmation instructions from the default mailer' do

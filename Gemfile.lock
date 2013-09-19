@@ -12,14 +12,15 @@ GIT
 PATH
   remote: .
   specs:
-    devise (2.2.4)
+    loyal_devise (2.2.6)
       bcrypt-ruby (~> 3.0)
+      loyal_warden
+      omniauth
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
-      warden (~> 1.2.1)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://ruby.taobao.org/
   specs:
     actionmailer (4.0.0.rc1)
       actionpack (= 4.0.0.rc1)
@@ -47,7 +48,7 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.8)
-    bcrypt-ruby (3.0.1)
+    bcrypt-ruby (3.1.1)
     builder (3.1.4)
     erubis (2.7.0)
     faraday (0.8.7)
@@ -59,6 +60,8 @@ GEM
     json (1.7.7)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    loyal_warden (2.0.1)
+      rack (>= 1.0)
     mail (2.5.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -133,8 +136,6 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
-    warden (1.2.1)
-      rack (>= 1.0)
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -146,8 +147,8 @@ PLATFORMS
 DEPENDENCIES
   activerecord-jdbc-adapter
   activerecord-jdbcsqlite3-adapter
-  devise!
   jruby-openssl
+  loyal_devise!
   mocha (~> 0.13.1)
   mongoid!
   omniauth (~> 1.0.0)

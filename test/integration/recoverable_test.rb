@@ -236,7 +236,7 @@ class PasswordTest < ActionDispatch::IntegrationTest
     reset_password :reset_password_token => user.reload.reset_password_token
 
     assert warden.authenticated?(:user)
-    assert user.reload.confirmed?
+    assert user.reload.email_confirmed?
   end
 
   test 'reset password request with valid E-Mail in XML format should return valid response' do

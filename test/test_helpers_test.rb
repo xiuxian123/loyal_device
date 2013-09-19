@@ -40,7 +40,7 @@ class TestHelpersTest < ActionController::TestCase
 
   test "does not redirect with valid user" do
     user = create_user
-    user.confirm!
+    user.email_confirm!
 
     sign_in user
     get :index
@@ -52,7 +52,7 @@ class TestHelpersTest < ActionController::TestCase
     assert_response :redirect
 
     user = create_user
-    user.confirm!
+    user.email_confirm!
 
     sign_in user
     get :index
@@ -61,7 +61,7 @@ class TestHelpersTest < ActionController::TestCase
 
   test "redirects if valid user signed out" do
     user = create_user
-    user.confirm!
+    user.email_confirm!
 
     sign_in user
     get :index
@@ -93,7 +93,7 @@ class TestHelpersTest < ActionController::TestCase
       end
 
       user = create_user
-      user.confirm!
+      user.email_confirm!
       sign_in user
     ensure
       Warden::Manager._after_set_user.pop
@@ -106,7 +106,7 @@ class TestHelpersTest < ActionController::TestCase
         flunk "callback was called while it should not"
       end
       user = create_user
-      user.confirm!
+      user.email_confirm!
 
       sign_in user
       sign_out user
@@ -134,7 +134,7 @@ class TestHelpersTest < ActionController::TestCase
 
   test "allows to sign in with different users" do
     first_user = create_user
-    first_user.confirm!
+    first_user.email_confirm!
 
     sign_in first_user
     get :index
@@ -142,7 +142,7 @@ class TestHelpersTest < ActionController::TestCase
     sign_out first_user
 
     second_user = create_user
-    second_user.confirm!
+    second_user.email_confirm!
 
     sign_in second_user
     get :index

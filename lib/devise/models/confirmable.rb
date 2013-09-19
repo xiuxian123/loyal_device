@@ -24,8 +24,8 @@ module Devise
     #
     # == Examples
     #
-    #   User.find(1).confirm!      # returns true unless it's already confirmed
-    #   User.find(1).confirmed?    # true/false
+    #   User.find(1).email_confirm!      # returns true unless it's already confirmed
+    #   User.find(1).email_confirmed?    # true/false
     #   User.find(1).send_confirmation_instructions # manually send instructions
     #
     module Confirmable
@@ -55,7 +55,7 @@ module Devise
       # Confirm a user by setting it's confirmed_at to actual time. If the user
       # is already confirmed, add an error to email field. If the user is invalid
       # add errors
-      def confirm!
+      def email_confirm!
         pending_any_confirmation do
           if confirmation_period_expired?
             self.errors.add(:email, :confirmation_period_expired,
@@ -80,7 +80,7 @@ module Devise
       end
 
       # Verifies whether a user is confirmed or not
-      def confirmed?
+      def email_confirmed?
         !!confirmed_at
       end
 
@@ -112,12 +112,12 @@ module Devise
       # is already confirmed, it should never be blocked. Otherwise we need to
       # calculate if the confirm time has not expired for this user.
       def active_for_authentication?
-        super && (!confirmation_required? || confirmed? || confirmation_period_valid?)
+        super && (!confirmation_required? || email_confirmed? || confirmation_period_valid?)
       end
 
       # The message to be shown if the account is inactive.
       def inactive_message
-        !confirmed? ? :unconfirmed : super
+        !email_confirmed? ? :unconfirmed : super
       end
 
       # If you don't want confirmation to be sent on create, neither a code
@@ -149,7 +149,7 @@ module Devise
 
         # Callback to overwrite if confirmation is required or not.
         def confirmation_required?
-          !confirmed?
+          !email_confirmed?
         end
 
         # Checks if the confirmation for the user is within the limit time.
@@ -196,7 +196,7 @@ module Devise
 
         # Checks whether the record requires any confirmation.
         def pending_any_confirmation
-          if (!confirmed? || pending_reconfirmation?)
+          if (!email_confirmed? || pending_reconfirmation?)
             yield
           else
             self.errors.add(:email, :already_confirmed)
@@ -217,7 +217,7 @@ module Devise
 
         def after_password_reset
           super
-          confirm! unless confirmed?
+          email_confirm! unless email_confirmed?
         end
 
         def postpone_email_change_until_confirmation
@@ -260,7 +260,7 @@ module Devise
         # Options must have the confirmation_token
         def confirm_by_token(confirmation_token)
           confirmable = find_or_initialize_with_error_by(:confirmation_token, confirmation_token)
-          confirmable.confirm! if confirmable.persisted?
+          confirmable.email_confirm! if confirmable.persisted?
           confirmable
         end
 

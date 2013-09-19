@@ -21,7 +21,7 @@ class TokenAuthenticatableTest < ActiveSupport::TestCase
   test 'should authenticate a valid user with authentication token and return it' do
     user = create_user
     user.ensure_authentication_token!
-    user.confirm!
+    user.email_confirm!
     authenticated_user = User.find_for_token_authentication(:auth_token => user.authentication_token)
     assert_equal authenticated_user, user
   end
@@ -29,7 +29,7 @@ class TokenAuthenticatableTest < ActiveSupport::TestCase
   test 'should return nil when authenticating an invalid user by authentication token' do
     user = create_user
     user.ensure_authentication_token!
-    user.confirm!
+    user.email_confirm!
     authenticated_user = User.find_for_token_authentication(:auth_token => user.authentication_token.reverse)
     assert_nil authenticated_user
   end
@@ -37,11 +37,11 @@ class TokenAuthenticatableTest < ActiveSupport::TestCase
   test 'should not be subject to injection' do
     user1 = create_user
     user1.ensure_authentication_token!
-    user1.confirm!
+    user1.email_confirm!
 
     user2 = create_user
     user2.ensure_authentication_token!
-    user2.confirm!
+    user2.email_confirm!
 
     user = User.find_for_token_authentication(:auth_token => {'$ne' => user1.authentication_token})
     assert_nil user
